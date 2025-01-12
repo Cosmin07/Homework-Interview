@@ -5,8 +5,16 @@ import classes from './SearchBar.module.css'
 
 const { Text } = Typography;
 
-const SearchBar: React.FC = () => {
+type SearchBarProps = {
+  onEnterPress: (query: string) => void;
+};
+
+const SearchBar: React.FC<SearchBarProps> = ({ onEnterPress }) => {
   const [inputValue, setInputValue] = useState<string>("");
+
+  const handleEnterPress = () => {
+      onEnterPress(inputValue);
+  };
 
   return (
     <div className={classes.searchBarContainer}>
@@ -14,6 +22,7 @@ const SearchBar: React.FC = () => {
         placeholder="Search for movies..."
         onChange={(e) => setInputValue(e.target.value)}
         size="large"
+        onPressEnter={handleEnterPress}
       />
       <div>
         <Text keyboard>Query: </Text>
