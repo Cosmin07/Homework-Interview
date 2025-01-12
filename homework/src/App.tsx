@@ -1,22 +1,22 @@
+import React from "react";
+import { Layout, Typography } from "antd";
+import SearchBar from "./components/SearchBar/SearchBar";
+import classes from './style.module.css'
 
-function App() {
+const { Header, Content } = Layout;
+const { Title } = Typography;
+
+const App: React.FC = () => {
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <input
-        type="text"
-        value={0}
-        style={{
-          padding: '10px',
-          fontSize: '16px',
-          width: '300px',
-          marginBottom: '20px',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-        }}
-      />
-      <p>Query: <strong> ... </strong></p>
-    </div>
+    <Layout>
+      <Header className={classes.header}>
+      <Title>Movie Search App</Title>
+      </Header>
+      <Content className={classes['page-content']}>
+        <SearchBar/>
+      </Content>
+    </Layout>
   );
-}
+};
 
-export default App
+export default App;
