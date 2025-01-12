@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout, Typography } from "antd";
 import SearchBar from "./components/SearchBar/SearchBar";
 import classes from './style.module.css'
-import MoviesList from "./components/SearchBar/MoviesList/MoviesList";
+import MoviesList from "./components/MoviesList/MoviesList";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
