@@ -57,11 +57,11 @@ const MoviesList: React.FC<{ query: string }> = ({ query }) => {
         return result;
     }
 
-    const moviesGroupedByDecade = groupMoviesByRecentDecades(movies);
+    const moviesGroupedByLastRecentsFourDecade = groupMoviesByRecentDecades(movies).slice(0, 4);
 
     return (
         loading ? <Spin size="large" /> :
-            moviesGroupedByDecade.slice(0, 4).map((item) => (
+        moviesGroupedByLastRecentsFourDecade.map((item) => (
                 <MoviesDecadeGroup movieDecadeGroup={item}></MoviesDecadeGroup>
             ))
     )
