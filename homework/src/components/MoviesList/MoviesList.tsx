@@ -27,9 +27,29 @@ const MoviesList: React.FC<{ query: string }> = ({ query }) => {
     }, [query]);
 
 
-    const getDecade = (year: number): number => {
-        return Math.floor(year / 10) * 10;
+    const getDecade = (year: string): number => {
+        return Math.floor(+year / 10) * 10;
     }
+
+    const getDecadesFromYearRange = (yearRange: string): number[] => {
+        const [startYear, endYear] = yearRange.split('–').map(Number);
+        const decades: number[] = [];
+
+        if (endYear === 0) {
+            decades.push(getDecade(startYear.toString()));
+        } else {
+            for (let year = startYear; year <= endYear; year++) {
+                const decade = getDecade(year.toString());
+                if (!decades.includes(decade)) {
+                    decades.push(decade);
+                }
+            }
+        }
+
+        // Sort the unique decades
+        decades.sort((a, b) => a - b);
+        return decades;
+    };
 
     const groupMoviesByRecentDecades = (movies: Movie[]): MovieDecadeGroup[] => {
 
@@ -39,18 +59,30 @@ const MoviesList: React.FC<{ query: string }> = ({ query }) => {
         const moviesByDecade: { [key: number]: Movie[] } = {};
 
         for (const movie of movies) {
-            const decade = getDecade(movie.Year);
-            if (!moviesByDecade[decade]) {
-                moviesByDecade[decade] = [];
+            let decades: number[];
+
+            // Check if year do not have years format and have - symbol
+            if (movie.Year.includes('–')) {
+                decades = getDecadesFromYearRange(movie.Year);
+            } else {
+                const decade = getDecade(movie.Year);
+                decades = [decade];
             }
-            moviesByDecade[decade].push(movie);
+
+            // Group movies by each detected decade
+            for (const decade of decades) {
+                if (!moviesByDecade[decade]) {
+                    moviesByDecade[decade] = [];
+                }
+                moviesByDecade[decade].push(movie);
+            }
         }
 
         //Extract and sort decades in descending order
         const sortedDecadesDescending = Object.keys(moviesByDecade).map(Number).sort((a, b) => b - a);
 
         for (const decade of sortedDecadesDescending) {
-            const sortedMoviesAsc = moviesByDecade[decade].sort((a, b) => a.Year - b.Year)
+            const sortedMoviesAsc = moviesByDecade[decade].sort((a, b) => +a.Year - +b.Year)
             result.push({ decade, movies: sortedMoviesAsc });
         }
 
@@ -61,8 +93,8 @@ const MoviesList: React.FC<{ query: string }> = ({ query }) => {
 
     return (
         loading ? <Spin size="large" /> :
-        moviesGroupedByLastRecentsFourDecade.map((item) => (
-                <MoviesDecadeGroup movieDecadeGroup={item}></MoviesDecadeGroup>
+            moviesGroupedByLastRecentsFourDecade.map((item) => (
+                <MoviesDecadeGroup movieDecadeGroup={item} key={item.decade}></MoviesDecadeGroup>
             ))
     )
 }
