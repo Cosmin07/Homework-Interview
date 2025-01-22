@@ -1,23 +1,4 @@
-# Interview Homework
-This repo contains the homework for interview candidates.
-
-## Instructions
-- Fork this repository and share it with us. @sergane1313 @pcbulai
-- Use javascript/typescript. 
-- Use the setup we have already created.
-- Have fun 😁 (ping us when you finish the homework)
-
-### Duration
-We expect this challenge to take between 1:30h - 2:30h of continuous coding (It took us an average of 2h 10m).
-
-## What are we looking for?
-- An efficient implementation.
-- Minimal styling (nothing fancy, we would like the items to be aligned).
-- Good grasp of javascript/typescript knowledge.
-- Good grasp of data manipulation.
-- A commit history, not one single commit with the whole code.
-
-## Homework description
+## Repository description
 Create a dynamic movie search application that interacts with the OMDb API, updates data in real-time as the user types, and categorizes movies by decades based on the search results
 
 ## Features to Implement
